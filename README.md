@@ -1,7 +1,20 @@
 # AI Engineering Roadmap
-Daily practice repo for my 5-month AI/ML Engineer self-study plan.
 
+Personal study and implementation repository covering core mathematics, machine learning pipelines, and software engineering foundations.
 
-## Progress Log
-- Day 1-4 (Phase 0): Python core revision — variables, conditions, loops, functions, OOP
-- Day 5-6: Number guessing game, NumPy temperature calculator
+---
+
+## Directory Structure
+
+* `00_python_basics/`: Core language syntax, control flow, and basic OOP.
+* `01_math_and_numpy/`: Linear algebra, matrix operations, and numerical arrays.
+* `02_pandas_and_viz/`: Data manipulation, aggregations, and exploratory plots.
+* `03_classical_ml/`: Classical supervised and unsupervised learning algorithms.
+
+---
+
+## Current Stack
+
+* Python 3.11+
+* NumPy, Pandas, Matplotlib, Seaborn
+* Scikit-Learn
