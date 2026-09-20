@@ -62,3 +62,24 @@ ORDER BY name;
 """)
 print(cursor.fetchall())
 
+# Problem 3:For each department, show the department ID and how many employees are in it — but only show departments with more than 2 employees.
+cursor.execute("""
+SELECT dept_id, COUNT(*)
+FROM employees
+GROUP BY dept_id
+HAVING COUNT(*) > 2
+ORDER BY dept_id;
+""")
+print(cursor.fetchall())
+
+# Problem 4: Get the department with the single highest total salary bill — just the dept_id and the total (hint: you'll need ORDER BY + LIMIT 1 alongside GROUP BY).
+cursor.execute("""
+SELECT dept_id, AVG(salary) AS avg_salary
+FROM employees 
+WHERE salary > 45000
+GROUP BY dept_id
+HAVING avg_salary > 55000
+ORDER BY avg_salary DESC
+LIMIT 1;
+""")
+print(cursor.fetchall())
