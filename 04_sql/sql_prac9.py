@@ -59,3 +59,30 @@ print(cursor.fetchall())
 
 cursor.execute("SELECT * FROM enrollments")
 print(cursor.fetchall())
+
+# INNER JOIN: students + their courses
+cursor.execute("""
+SELECT s.name, c.course_name
+FROM students s
+INNER JOIN enrollments e ON s.student_id = e.student_id
+INNER JOIN courses c ON e.course_id = c.course_id
+""")
+print(cursor.fetchall())
+
+# Write a query using INNER JOIN that shows student name, course name, AND credits — using all 3 tables (students, enrollments, courses).
+cursor.execute("""
+SELECT s.name, c.course_name, c.credits
+FROM students s
+INNER JOIN enrollments e ON s.student_id = e.student_id
+INNER JOIN courses c ON e.course_id = c.course_id
+""")
+print(cursor.fetchall())
+
+#LEFT JOIN: see Jack actually appear with a NULL
+cursor.execute("""
+SELECT s.name, c.course_name
+FROM students s
+LEFT JOIN enrollments e ON s.student_id = e.student_id
+LEFT JOIN courses c ON e.course_id = c.course_id
+""")
+print(cursor.fetchall())
