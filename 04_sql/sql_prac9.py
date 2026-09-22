@@ -78,11 +78,5 @@ INNER JOIN courses c ON e.course_id = c.course_id
 """)
 print(cursor.fetchall())
 
-#LEFT JOIN: see Jack actually appear with a NULL
-cursor.execute("""
-SELECT s.name, c.course_name
-FROM students s
-LEFT JOIN enrollments e ON s.student_id = e.student_id
-LEFT JOIN courses c ON e.course_id = c.course_id
-""")
-print(cursor.fetchall())
+
+
