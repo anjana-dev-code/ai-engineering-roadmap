@@ -15,5 +15,15 @@ for name,grade in students:
     if grade >= passing_grade:
         passed_students += 1
 
-print(passed_students)
 
+# top student and their score
+top_student = ""
+highest_grade = 0
+for name, grade in students:
+    if grade > highest_grade:
+        highest_grade = grade
+        top_student = name
+
+print(top_student)
+print(highest_grade)
+    
