@@ -34,6 +34,8 @@ def two_sum(nums, target):
         # otherwise store this number and its position, move on
         seen[num] = i
 
-print(two_sum([2,7,10,11,15,20,25,30],30))
+    return []
 
+print(two_sum([3, 2, 4], 6))
+print(two_sum([1, 2, 3], 100))
     
