@@ -19,7 +19,10 @@ position, and for each new number check if its complement
 """
 
 def two_sum(nums, target):
-    # make an empty dict to remember numbers I have seen
+    """Return the indices of the two numbers that add up to target.
+
+  Returns an empty list if no pair exists.
+  """
     seen = {}
 
     # go through the list, tracking each number and its position
@@ -36,6 +39,6 @@ def two_sum(nums, target):
 
     return []
 
-print(two_sum([3, 2, 4], 6))
-print(two_sum([1, 2, 3], 100))
-    
+print(two_sum([2, 7, 11, 15], 9)) 
+print(two_sum([3, 3], 6))  
+print(two_sum([1, 2, 3], 100))  
