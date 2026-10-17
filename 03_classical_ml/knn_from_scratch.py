@@ -28,3 +28,4 @@ def predict_one(
 
   # Return the most common label (majority vote)
   return np.bincount(k_nearest_labels).argmax()
+  
