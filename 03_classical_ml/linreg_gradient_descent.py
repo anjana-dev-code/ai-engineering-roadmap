@@ -24,23 +24,23 @@ loss_history = []
 
 # Gradient Descent Training Loop
 for epoch in range(epochs):
-  # Forward pass: predict y
-  y_pred = X @ w + b
+    # Forward pass: predict y
+    y_pred = X @ w + b
 
-  # Calculate error
-  error = y_pred - y
+    # Calculate error
+    error = y_pred - y
 
-  # Compute Mean Squared Error (MSE) loss
-  loss = (1 / n_samples) * np.sum(error**2)
-  loss_history.append(loss)
+    # Compute Mean Squared Error (MSE) loss
+    loss = (1 / n_samples) * np.sum(error**2)
+    loss_history.append(loss)
 
-  # Compute gradients
-  dw = (2 / n_samples) * (X.T @ error)
-  db = (2 / n_samples) * np.sum(error)
+    # Compute gradients
+    dw = (2 / n_samples) * (X.T @ error)
+    db = (2 / n_samples) * np.sum(error)
 
-  # Update parameters (step downhill)
-  w -= lr * dw
-  b -= lr * db
+    # Update parameters (step downhill)
+    w -= lr * dw
+    b -= lr * db
 
 print(f"Trained Weight (w): {w.item():.4f} (Target: ~3.0)")
 print(f"Trained Bias (b):    {b:.4f} (Target: ~5.0)")
