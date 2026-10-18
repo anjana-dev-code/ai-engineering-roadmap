@@ -15,14 +15,14 @@ def confusion_matrix_scratch(y_true, y_pred):
 
 def precision_scratch(y_true, y_pred):
     tn, fp, fn, tp = confusion_matrix_scratch(y_true, y_pred).ravel()
-    if tp + fp == 0:  # model never predicted 1
+    if tp + fp == 0:  
         return 0.0
     return tp / (tp + fp)
 
 
 def recall_scratch(y_true, y_pred):
     tn, fp, fn, tp = confusion_matrix_scratch(y_true, y_pred).ravel()
-    if tp + fn == 0:  # no real 1s exist
+    if tp + fn == 0:  
         return 0.0
     return tp / (tp + fn)
 
@@ -35,7 +35,7 @@ def f1_scratch(y_true, y_pred):
     return 2 * p * r / (p + r)
 
 
-# Tests: scratch vs sklearn
+# scratch vs sklearn
 cases = {
     "normal": ([1,0,1,1,0,0,1,0,1,0,1,1], [1,0,0,1,0,1,1,0,1,0,0,1]),
     "perfect": ([1,0,1,0,1,0], [1,0,1,0,1,0]),
