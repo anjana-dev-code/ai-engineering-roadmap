@@ -60,3 +60,13 @@ if __name__ == "__main__":
     
     print(f"Scratch Model Accuracy: {scratch_acc * 100:.2f}%\n")
 
+
+    print("Sklearn Parity")
+    sk_model = LogisticRegression(random_state=42)
+    sk_model.fit(X_train_scaled, y_train)
+    
+    sk_preds = sk_model.predict(X_test_scaled)
+    sk_acc = accuracy_score(y_test, sk_preds)
+    
+    print(f"Scratch Model Accuracy: {scratch_acc * 100:.2f}%")
+    print(f"Sklearn Model Accuracy: {sk_acc * 100:.2f}%")
