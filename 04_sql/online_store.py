@@ -62,7 +62,7 @@ cur.executemany("INSERT INTO order_items VALUES (?, ?, ?)", order_items)
 conn.commit()
 
 def run(title, query):
-    print(f"\n--- {title} ---")
+    print(f"\n{title}")
     for row in cur.execute(query):
         print(row)
 
@@ -73,3 +73,35 @@ JOIN products p ON p.id = oi.product_id
 GROUP BY p.id
 ORDER BY revenue DESC;
 """)
+
+run("Top 3 customers by spend", """
+SELECT c.name, SUM(oi.quantity * p.price) AS total_spend
+FROM customers c
+JOIN orders o       ON o.customer_id = c.id
+JOIN order_items oi ON oi.order_id   = o.id
+JOIN products p     ON p.id          = oi.product_id
+GROUP BY c.id
+ORDER BY total_spend DESC
+LIMIT 3;
+""")
+
+run("Customers with no orders", """
+SELECT c.name
+FROM customers c
+LEFT JOIN orders o ON o.customer_id = c.id
+WHERE o.id IS NULL;
+""")
+
+run("Categories above the overall average line value", """
+SELECT p.category, AVG(oi.quantity * p.price) AS avg_line_value
+FROM order_items oi
+JOIN products p ON p.id = oi.product_id
+GROUP BY p.category
+HAVING AVG(oi.quantity * p.price) > (
+    SELECT AVG(oi2.quantity * p2.price)
+    FROM order_items oi2
+    JOIN products p2 ON p2.id = oi2.product_id
+);
+""")
+
+conn.close()
