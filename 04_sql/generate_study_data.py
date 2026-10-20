@@ -52,3 +52,6 @@ for student_id in range(1, 21):
 cur.executemany("INSERT INTO sessions VALUES (?, ?, ?, ?, ?)", sessions)
 conn.commit()
 
+print(f"Created {len(students)} students and {len(sessions)} sessions")
+print("Hidden hard workers:", sorted(hard_workers))
+conn.close()
