@@ -26,4 +26,13 @@ GROUP BY subject
 ORDER BY total_minutes DESC;
 """)
 
+run("Q3: students above the overall average", """
+SELECT s.name, ROUND(AVG(ss.minutes), 1) AS avg_minutes
+FROM students s
+JOIN sessions ss ON ss.student_id = s.id
+GROUP BY s.id
+HAVING AVG(ss.minutes) > (SELECT AVG(minutes) FROM sessions)
+ORDER BY avg_minutes DESC;
+""")
+
 conn.close()
