@@ -1,6 +1,5 @@
 """
 PROJECT: Automated Customer Churn Prediction & Risk Scoring Pipeline
-COMMIT 4: Actionable Output & Prioritized Risk Export
 """
 
 import numpy as np
