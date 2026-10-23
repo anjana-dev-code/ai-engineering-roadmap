@@ -1,16 +1,19 @@
 """
-PROJECT: Automated Customer Churn Classification Engine
+PROJECT: Automated Customer Churn Prediction & Risk Scoring Pipeline
+COMMIT 4: Actionable Output & Prioritized Risk Export
 """
+
 import numpy as np
 import pandas as pd
-from sklearn.model_selection import train_test_split
 from sklearn.ensemble import RandomForestClassifier
-from sklearn.metrics import classification_report, confusion_matrix
+from sklearn.metrics import classification_report, roc_auc_score
+from sklearn.model_selection import train_test_split
 
 def run_churn_pipeline():
     # Data Generation
     np.random.seed(42)
     n_samples = 200
+    
     raw_data = {
         "customer_id": [f"CUST_{i:03d}" for i in range(1, n_samples + 1)],
         "tenure_months": np.random.randint(1, 48, size=n_samples),
@@ -22,35 +25,50 @@ def run_churn_pipeline():
     
     # Feature Engineering
     df["spend_per_tenure"] = df["monthly_spend"] / (df["tenure_months"] + 1)
+    
     churn_score = (
         (df["support_calls"] > 2).astype(int) * 0.5 +
         (df["portal_logins_per_week"] < 2).astype(int) * 0.4 +
         np.random.normal(0, 0.1, size=n_samples)
     )
     df["churned"] = (churn_score > 0.6).astype(int)
-
-    print("Training the Machine Learning Brain")
-    # Select our features (the warning signs) and the target (the answer)
-    feature_cols = ["tenure_months", "monthly_spend", "support_calls", "portal_logins_per_week", "spend_per_tenure"]
-    X = df[feature_cols]
-    y = df["churned"]
-
-    # Split the data: 75% for training, 25% for a secret test
-    X_train, X_test, y_train, y_test = train_test_split(X, y, test_size=0.25, random_state=42, stratify=y)
     
-    # Initialize and Train the Random Forest
+    # Prepare Feature Matrix (X) and Target Vector (y)
+    feature_cols = ["tenure_months", "monthly_spend", "support_calls", "portal_logins_per_week", "spend_per_tenure"]
+    X = df[feature_cols].values
+    y = df["churned"].values
+    
+    # New: We are passing df["customer_id"] into the split so we can track exactly who is in the test set
+    X_train, X_test, y_train, y_test, ids_train, ids_test = train_test_split(
+        X, y, df["customer_id"], test_size=0.25, random_state=42, stratify=y
+    )
+    
+    # Train Random Forest Classifier
     model = RandomForestClassifier(n_estimators=100, random_state=42)
     model.fit(X_train, y_train)
-
-    print("Testing the Model on Unseen Data\n")
-    # Let the model guess on the test set
-    predictions = model.predict(X_test)
     
-    print("Confusion Matrix")
-    print(confusion_matrix(y_test, predictions))
+    # Predict Probabilities & Evaluate Diagnostics
+    y_pred_probs = model.predict_proba(X_test)[:, 1] # Probability of churn
+    y_pred = model.predict(X_test)
     
-    print("\nClassification Report")
-    print(classification_report(y_test, predictions))
+    print("Classification Diagnostic Report:")
+    print(classification_report(y_test, y_pred))
+    
+    auc_score = roc_auc_score(y_test, y_pred_probs)
+    print(f"ROC-AUC Score: {auc_score:.4f}\n")
+    
+    # Generate Prioritized Retention Action List 
+    print("Generating Executive Retention Report:")
+    test_results_df = pd.DataFrame({
+        "customer_id": ids_test,
+        "churn_probability": y_pred_probs,
+        "actual_churn": y_test
+    })
+    
+    # Sort the list so the highest risk customers are at the top
+    prioritized_list = test_results_df.sort_values(by="churn_probability", ascending=False).head(5)
+    print("\nTop 5 High-Risk Customers Flagged for Immediate Intervention:")
+    print(prioritized_list.to_string(index=False))
 
 if __name__ == "__main__":
     run_churn_pipeline()
