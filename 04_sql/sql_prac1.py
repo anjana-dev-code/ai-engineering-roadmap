@@ -4,6 +4,9 @@ import sqlite3
 conn = sqlite3.connect("school.db")
 cursor = conn.cursor()
 
+cursor.execute("DROP TABLE IF EXISTS enrollments")
+cursor.execute("DROP TABLE IF EXISTS students")
+
 # Create the students table
 cursor.execute("""
 CREATE TABLE IF NOT EXISTS students (
@@ -39,3 +42,4 @@ print(cursor.fetchall())
 
 cursor.execute("SELECT * FROM enrollments")
 print(cursor.fetchall())
+
