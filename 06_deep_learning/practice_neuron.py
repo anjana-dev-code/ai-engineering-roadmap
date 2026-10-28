@@ -10,6 +10,10 @@ def decide(x, w, b):
     else:
         return "stay"
 
+def tanh(z):
+    return (np.exp(z) - np.exp(-z))/(np.exp(z) + np.exp(-z))
+
+
 
 w, b = np.array([0.9, -0.2, -0.5]), -0.1
 
@@ -23,3 +27,8 @@ for name, x in scenarios.items():
     z = np.dot(w, x) + b
     print(f"{name}: z = {z:.2f}, sigmoid = {sigmoid(z):.3f}, decision = {decide(x, w, b)}")
 
+print("Presdiction: tanh(0) should be 0.0")
+
+test_z = np.array([-3.0, 0.0, 2.0])
+print("custom tanh:",tanh(test_z))
+print("numpy tanh:",np.tanh(test_z))
