@@ -13,6 +13,8 @@ def decide(x, w, b):
 def tanh(z):
     return (np.exp(z) - np.exp(-z))/(np.exp(z) + np.exp(-z))
 
+def neuron_batch(X, w, b):
+    return X @ w + b
 
 
 w, b = np.array([0.9, -0.2, -0.5]), -0.1
@@ -32,3 +34,13 @@ print("Presdiction: tanh(0) should be 0.0")
 test_z = np.array([-3.0, 0.0, 2.0])
 print("custom tanh:",tanh(test_z))
 print("numpy tanh:",np.tanh(test_z))
+
+X = np.array([[2, 3], 
+              [1, 1], 
+              [0, 4]])
+w = np.array([0.5, -1.0])
+b = 1.0
+
+outputs = neuron_batch(X, w, b)
+print("batch outputs:", outputs)
+print("first output check:",outputs[0])
