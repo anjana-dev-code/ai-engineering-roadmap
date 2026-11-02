@@ -13,6 +13,8 @@ def gradient_descent(grad_fn, w0, lr, steps):
         path.append(w)
     return path
 
+def compute_mse(y_pred, y_true):
+    return float(np.mean((y_pred - y_true) ** 2))
 
 if __name__ == "__main__":
     # Test on f(w) = (w - 3)^2, where f'(w) = 2 * (w - 3)
@@ -36,7 +38,7 @@ if __name__ == "__main__":
 
     # Prediction for alpha = 1: it will bounce indefinitely between 0 and 6
     path_bounce = gradient_descent(grad_quad, w0=0.0, lr=1.0, steps=6)
-    print("Path with alpha=1.0 (prediction confirmed):", path_bounce)
+    print("\nPath with alpha=1.0 (prediction confirmed):", path_bounce)
     assert path_bounce == [0.0, 6.0, 0.0, 6.0, 0.0, 6.0, 0.0]
 
     print("Commit 2 tests passed")
@@ -61,3 +63,34 @@ if __name__ == "__main__":
     assert np.isclose(final_w, 2.0, atol=1e-2), f"Expected ~2.0, got {final_w}"
 
     print("Commit 4 tests passed")
+
+    # Fit line with bias: y = w * x + b
+    y_bias_data = np.array([3.0, 5.0, 7.0, 9.0])  # y = 2x + 1
+
+    w = 0.0
+    b = 0.0
+    lr = 0.05
+    steps = 2000
+    loss_history = []
+
+    for _ in range(steps):
+        y_hat = w * x_data + b
+        loss_history.append(compute_mse(y_hat, y_bias_data))
+
+        error = y_hat - y_bias_data
+        dw = 2.0 * np.mean(x_data * error)
+        db = 2.0 * np.mean(error)
+
+        w -= lr * dw
+        b -= lr * db
+
+    print(f"\nTrained w: {w:.4f} (target: 2.0)")
+    print(f"Trained b: {b:.4f} (target: 1.0)")
+    assert np.isclose(w, 2.0, atol=0.01), f"Expected w ~ 2, got {w}"
+    assert np.isclose(b, 1.0, atol=0.01), f"Expected b ~ 1, got {b}"
+
+    print("First 5 losses:", [round(l, 4) for l in loss_history[:5]])
+    print("Last 5 losses: ", [round(l, 6) for l in loss_history[-5:]])
+    assert loss_history[0] > loss_history[-1], "Loss should fall steadily!"
+
+    print("\nCommit 5 passed: All parts complete")
