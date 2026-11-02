@@ -40,3 +40,11 @@ if __name__ == "__main__":
     assert path_bounce == [0.0, 6.0, 0.0, 6.0, 0.0, 6.0, 0.0]
 
     print("Commit 2 tests passed")
+
+    lrs = [0.001, 0.1, 0.9, 1.0, 1.1]
+    print("\nLearning Rate Experiment (20 steps)")
+    for lr in lrs:
+        path = gradient_descent(grad_quad, w0=0.0, lr=lr, steps=20)
+        print(f"alpha = {lr:<5} -> final w = {path[-1]:.4f}")
+
+    print("Commit 3 tests passed")
