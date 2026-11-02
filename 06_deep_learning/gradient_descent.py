@@ -29,3 +29,14 @@ if __name__ == "__main__":
     assert abs(path_100[-1] - 3.0) < 1e-3, f"Expected ~3.0, got {path_100[-1]}"
 
     print("Commit 1 tests passed")
+
+    lr_paper = (1.0 - (0.5) ** (1 / 3)) / 2.0
+    paper_path = gradient_descent(grad_quad, w0=6.0, lr=lr_paper, steps=3)
+    assert np.isclose(paper_path[3], 4.5), f"Expected 4.5, got {paper_path[3]}"
+
+    # Prediction for alpha = 1: it will bounce indefinitely between 0 and 6
+    path_bounce = gradient_descent(grad_quad, w0=0.0, lr=1.0, steps=6)
+    print("Path with alpha=1.0 (prediction confirmed):", path_bounce)
+    assert path_bounce == [0.0, 6.0, 0.0, 6.0, 0.0, 6.0, 0.0]
+
+    print("Commit 2 tests passed")
