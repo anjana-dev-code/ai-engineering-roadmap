@@ -48,3 +48,16 @@ if __name__ == "__main__":
         print(f"alpha = {lr:<5} -> final w = {path[-1]:.4f}")
 
     print("Commit 3 tests passed")
+
+    # Fit line through origin: y = w * x
+    x_data = np.array([1.0, 2.0, 3.0, 4.0])
+    y_data = np.array([2.0, 4.0, 6.0, 8.0])
+
+    grad_line = lambda w: 2.0 * np.mean(x_data * (w * x_data - y_data))
+
+    line_path = gradient_descent(grad_line, w0=0.0, lr=0.01, steps=200)
+    final_w = line_path[-1]
+    print(f"\nTrained w (no bias): {final_w:.4f} (target: 2.0)")
+    assert np.isclose(final_w, 2.0, atol=1e-2), f"Expected ~2.0, got {final_w}"
+
+    print("Commit 4 tests passed")
