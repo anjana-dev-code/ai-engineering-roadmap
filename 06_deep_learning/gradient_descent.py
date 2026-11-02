@@ -1,7 +1,4 @@
-"""
-06_deep_learning/gradient_descent.py
-Step 1: Core 1D Gradient Descent Engine and verification on (w - 3)^2.
-"""
+
 import numpy as np
 
 
