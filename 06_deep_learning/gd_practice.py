@@ -50,3 +50,16 @@ if __name__ == "__main__":
     assert np.isclose(path[1], 1.4)
     assert np.isclose(path[-1], 3.0, atol=1e-2)
     print("B, final w:", round(path[-1], 4))
+
+    # Part C: y = 3x - 2 (weight and bias) 
+    x = np.array([0.0, 1.0, 2.0, 3.0])
+    y = np.array([-2.0, 1.0, 4.0, 7.0])
+
+    w1, b1, _ = fit_line(x, y, lr=0.05, steps=1)
+    assert np.isclose(w1, 0.75) and np.isclose(b1, 0.25)
+
+    w, b, losses = fit_line(x, y, lr=0.05, steps=3000)
+    print(f"C, final w = {w:.4f}, b = {b:.4f}")
+    assert np.isclose(w, 3.0, atol=0.01) and np.isclose(b, -2.0, atol=0.01)
+    assert all(losses[i] > losses[i + 1] for i in range(100))
+
