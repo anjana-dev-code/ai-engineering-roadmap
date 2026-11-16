@@ -63,3 +63,4 @@ if __name__ == "__main__":
     assert np.isclose(w, 3.0, atol=0.01) and np.isclose(b, -2.0, atol=0.01)
     assert all(losses[i] > losses[i + 1] for i in range(100))
 
+print("All tests passed")
