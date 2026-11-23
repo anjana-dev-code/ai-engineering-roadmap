@@ -13,3 +13,7 @@ path = gradient_descent(grad_a, w0= 10, lr= 0.5, steps= 4)
 print("alpha = 0.5:", path)
 assert path == [10.0, 4.0, 4.0, 4.0, 4.0]
 
+path = gradient_descent(grad_a, w0= 10, lr= 1.5, steps= 2)
+print("alpha = 1.5:", path)
+assert path == [10.0, -8.0, 28.0]
+
