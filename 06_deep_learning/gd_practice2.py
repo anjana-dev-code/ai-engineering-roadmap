@@ -9,5 +9,7 @@ path = gradient_descent(grad_a, w0= 10, lr= 0.2, steps= 3)
 print("alpha= 0.2:", path)
 assert np.allclose(path, [10.0, 7.6, 6.16, 5.296])
 
-
+path = gradient_descent(grad_a, w0= 10, lr= 0.5, steps= 4)
+print("alpha = 0.5:", path)
+assert path == [10.0, 4.0, 4.0, 4.0, 4.0]
 
